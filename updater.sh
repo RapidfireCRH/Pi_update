@@ -16,7 +16,31 @@ wget https://github.com/RapidfireCRH/Pi_update/blob/master/lastupdate -o lastupd
 if [ "$(md5sum < lastupdate.new)" = "$(md5sum < lastupdate)" ]; then
     exit
 else
-    wget listener
-    wget compress
-    wget temp
+    #get all scripts
+    wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/listener.sh
+    wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/compress.sh
+    wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/temp.sh
+    #get all python scripts
+    wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/Client_Simple.py
+    wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/temp.py
+    
+    #remove and replace all scripts
+    rm /home/listener/listener.sh
+    mv ./listener.sh /home/listener/listener.sh
+    rm /home/listener/Client_Simple.py
+    mv ./Client_Simple.py /home/listener/Client_Simple.py
+    rm /home/scripts/compress.sh
+    mv ./compress.sh /home/scripts/compress.sh
+    
+    #set permissions on each file
+    chown listener:listener listener.sh
+    chmod 774 /home/listener/listener.sh
+    chown listener:listener Client_Simple.py
+    chmod 774 /home/listener/Client_Simple.py
+    chown root:root
+    chmod 770 /home/scripts/compress.sh
+    chown root:root
+    chmod 770 /home/scripts/temp.sh
+    chown root:root
+    chmod 770 /home/scripts/temp.py
 fi
