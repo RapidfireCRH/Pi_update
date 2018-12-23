@@ -1,3 +1,6 @@
+#Thanks to Anthor for providing this file
+#Check out his Elite Project, EDSM.net
+#Original code here: https://github.com/EDSM-NET/EDDN/tree/master/examples
 import zlib
 import zmq
 import simplejson
@@ -38,6 +41,8 @@ def main():
                 __message   = zlib.decompress(__message)
                 __json      = simplejson.loads(__message)
 
+                #by having the file open and close every write allows for a new file to be created on the new day
+                #probably a better way to write this, but i hate my SD card :D
                 fs = open(datetime.datetime.utcnow().strftime("%Y-%m-%d")+"_json","a")
                 fs.write(str(__json)+"\n")
                 fs.close()
