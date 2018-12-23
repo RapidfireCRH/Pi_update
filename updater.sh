@@ -12,11 +12,11 @@ else
 fi
 
 #check for newer version of scripts
-wget 
+wget https://github.com/RapidfireCRH/Pi_update/blob/master/lastupdate -o lastupdate.new
 if [ "$(md5sum < lastupdate.new)" = "$(md5sum < lastupdate)" ]; then
-wget 
-wget 
-wget
-wget
-wget
-
+    exit
+else
+    wget listener
+    wget compress
+    wget temp
+fi
