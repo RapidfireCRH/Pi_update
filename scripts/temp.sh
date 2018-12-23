@@ -1,1 +1,1 @@
-python3 temp.py
+python3 ./temp.py
