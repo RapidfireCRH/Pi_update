@@ -19,10 +19,8 @@ else
     #get all scripts
     wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/listener.sh
     wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/compress.sh
-    wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/temp.sh
     #get all python scripts
     wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/Client_Simple.py
-    wget https://raw.githubusercontent.com/RapidfireCRH/Pi_update/master/scripts/temp.py
     
     #remove and replace all scripts
     rm /home/listener/listener.sh
@@ -37,10 +35,6 @@ else
     chmod 774 /home/listener/listener.sh
     chown listener:listener Client_Simple.py
     chmod 774 /home/listener/Client_Simple.py
-    chown root:root
+    chown root:root /home/scripts/compress.sh
     chmod 770 /home/scripts/compress.sh
-    chown root:root
-    chmod 770 /home/scripts/temp.sh
-    chown root:root
-    chmod 770 /home/scripts/temp.py
 fi
