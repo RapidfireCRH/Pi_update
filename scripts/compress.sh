@@ -1,3 +1,5 @@
+# load variables
+export $(egrep -v '^#' .env | xargs)
 
 # constants
 cd /home/listener/working
@@ -6,7 +8,7 @@ correctformat=$(date +%Y-%m-%d.jsonl)
 log=$(date +%Y-%m-%d.log)
 dat=$(date)
 
-#cleanup and logging
+# cleanup and logging
 echo "Deleting old files in cache"
 find /home/listener/working/cache -type f -mtime +7
 find /home/listener/working/cache -type f -mtime +7 | xargs -r0 rm --
@@ -33,5 +35,3 @@ echo "Changing ownership"
 chown webhost:webhost "../../webhost/webroot/$correctformat.7z"
 chmod 664 "../../webhost/webroot/$correctformat.7z"
 chown listener:listener "./log/$log"
-
-
