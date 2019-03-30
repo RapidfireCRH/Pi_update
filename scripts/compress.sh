@@ -1,10 +1,10 @@
+#!/usr/bin/env bash
 
 # constants
 cd /home/listener/working
-yest=$(date +%Y-%m-%d_json)
-correctformat=$(date +%Y-%m-%d.jsonl)
-log=$(date +%Y-%m-%d.log)
-dat=$(date)
+yest=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d_json)
+correctformat=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d.jsonl)
+log=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d.log)
 
 #cleanup and logging
 echo "Deleting old files in cache"
@@ -12,7 +12,7 @@ find /home/listener/working/cache -type f -mtime +7
 find /home/listener/working/cache -type f -mtime +7 | xargs -r0 rm --
 
 #actual compress
-echo "Starting Compress: $dat"
+echo "Starting Compress: $(date)"
 echo "Moving File $yest"
 mv ../$yest ./$correctformat
 echo "Moving Log File"
@@ -27,11 +27,8 @@ echo "deleting json file"
 rm $correctformat
 echo "moving 7zip file to completed folder"
 mv "$correctformat.7z" "../../webhost/webroot/$correctformat.7z"
-dat=$(date)
-echo "Compress completed: $dat"
+echo "Compress completed: $(date)"
 echo "Changing ownership"
 chown webhost:webhost "../../webhost/webroot/$correctformat.7z"
 chmod 664 "../../webhost/webroot/$correctformat.7z"
 chown listener:listener "./log/$log"
-
-
