@@ -43,7 +43,7 @@ def main():
 
                 #by having the file open and close every write allows for a new file to be created on the new day
                 #probably a better way to write this, but i hate my SD card :D
-                fs = open(datetime.datetime.utcnow().strftime("%Y-%m-%d")+"_json","a")
+                fs = open(datetime.datetime.utcnow().strftime("%Y-%m-%d")+".jsonl","a")
                 fs.write(simplejson.dumps(__json)+"\n")
                 fs.close()
                 sys.stdout.flush()
