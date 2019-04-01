@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# check if it's past midnight
+if [[ $(env TZ=Etc/UTC date +"%H") != "00" ]]; then
+    return # not midnight, stop execution
+fi
+
 # constants
 home_dir=/home/listener
 jsonl_file=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d.jsonl)
