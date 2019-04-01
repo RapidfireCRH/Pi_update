@@ -11,6 +11,7 @@ jsonl_file=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d.jsonl)
 log=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d.log)
 
 mkdir -p home_dir/working
+mkdir -p home_dir/webfolder
 cd $home_dir/working
 
 #cleanup and logging
@@ -33,9 +34,7 @@ rm ./listener.log
 echo "deleting json file"
 rm $jsonl_file
 echo "moving 7zip file to completed folder"
-mv "$jsonl_file.7z" "../../webhost/webroot/$jsonl_file.7z"
+mv "$jsonl_file.7z" "$home_dir/webfolder/$jsonl_file.7z"
 echo "Compress completed: $(date)"
-echo "Changing ownership"
-chown webhost:webhost "../../webhost/webroot/$jsonl_file.7z"
-chmod 664 "../../webhost/webroot/$jsonl_file.7z"
-chown listener:listener "./log/$log"
+echo "Removing old files"
+find $home_dir/webfolder/ -type f -name '*.7z' -mtime +30 -exec rm {} \;

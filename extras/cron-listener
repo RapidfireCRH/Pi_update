@@ -1,0 +1,2 @@
+# replace 23,0 with the hour past midnight UTC or run hourly. Use more than one time to account for daylight savings
+5 23,0 * * * /home/scripts/compress.sh>>/home/listener/log/log.log

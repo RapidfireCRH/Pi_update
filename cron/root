@@ -1,2 +1,0 @@
-5 17 * * * /home/scripts/compress.sh>>/home/listener/log/log.log
-@reboot /home/scripts/mountfd.sh>>~/mount.log 2>&1
