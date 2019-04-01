@@ -7,6 +7,11 @@ fi
 
 # constants
 home_dir=/home/listener
+
+if [[ -n "$1" ]]; then
+    home_dir=$1
+fi
+
 jsonl_file=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d.jsonl)
 log=$(env TZ=Etc/UTC date -d "yesterday" +%Y-%m-%d.log)
 
