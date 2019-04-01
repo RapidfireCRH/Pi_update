@@ -6,6 +6,7 @@ import zmq
 import sys
 import time
 import datetime
+import signal
 
 
 """
@@ -15,22 +16,27 @@ __relayEDDN             = 'tcp://eddn.edcd.io:9500'
 __timeoutEDDN           = 600000
 
 
-
 """
  "  Start
 """
 def main():
+    run = True
+    def quit_gracefully(*args):
+        nonlocal run
+        run = False
+
+    signal.signal(signal.SIGTERM, quit_gracefully)
     context     = zmq.Context()
     subscriber  = context.socket(zmq.SUB)
 
     subscriber.setsockopt(zmq.SUBSCRIBE, b"")
     subscriber.setsockopt(zmq.RCVTIMEO, __timeoutEDDN)
 
-    while True:
+    while run:
         try:
             subscriber.connect(__relayEDDN)
 
-            while True:
+            while run:
                 __message   = subscriber.recv()
 
                 if __message == False:
@@ -47,11 +53,14 @@ def main():
                 sys.stdout.flush()
 
         except zmq.ZMQError as e:
-            print ('ZMQSocketException: ' + str(e))
+            print('ZMQSocketException: ' + str(e))
             sys.stdout.flush()
             subscriber.disconnect(__relayEDDN)
             time.sleep(5)
-
+    try:
+        subscriber.disconnect(__relayEDDN)
+    except zmq.error.ZMQError:
+        pass  # ignore
 
 
 if __name__ == '__main__':
