@@ -6,7 +6,7 @@ if [[ $(env TZ=Etc/UTC date +"%H") != "00" ]]; then
 fi
 
 # constants
-home_dir=/home/listener
+home_dir=/home/eddn
 
 if [[ -n "$1" ]]; then
     home_dir=$1
