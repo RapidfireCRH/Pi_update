@@ -22,3 +22,8 @@
     * **lighttpd**: There is a config for it in (extras)[https://github.com/RapidfireCRH/Pi_update/tree/linux-service/extras]. This has to go to ``/etc/lighttpd/lighttpd.conf``
     * **Apache2**: Create a symlink to the webroot ``ln -s /home/eddn/webfolder/ /var/www/html/eddn`` and if necessary put the htaccess file from (extras)[https://github.com/RapidfireCRH/Pi_update/tree/linux-service/extras] into the webfolder to enable folder listing.
 6. Contact Rapidfire, so he can pull the compressed files.
+
+
+**Note**: To run 7zip with the lowest possible priority, edit ``compress.sh`` and change the line\
+``7zr a "$jsonl_file.7z" $jsonl_file listener.log`` to\
+``nice -n 19 7zr a "$jsonl_file.7z" $jsonl_file listener.log``
