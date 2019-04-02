@@ -21,8 +21,8 @@ cd $home_dir/working
 
 #cleanup and logging
 echo "Deleting old files in cache"
-find /home/listener/working/cache -type f -mtime +7
-find /home/listener/working/cache -type f -mtime +7 | xargs -r0 rm --
+find $home_dir/working/cache -type f -mtime +7
+find $home_dir/working/cache -type f -mtime +7 | xargs -r0 rm --
 
 #actual compress
 echo "Starting Compress: $(date)"
