@@ -7,6 +7,7 @@ import sys
 import time
 import datetime
 import signal
+import json
 
 
 """
@@ -47,7 +48,9 @@ def main():
 
                 #by having the file open and close every write allows for a new file to be created on the new day
                 #probably a better way to write this, but i hate my SD card :D
-                fs = open(datetime.datetime.utcnow().strftime("%Y-%m-%d")+".jsonl","a")
+                jsonMessage = json.loads(__message.decode())
+                t = datetime.datetime.strptime(jsonMessage["header"]["gatewayTimestamp"], "%Y-%m-%dT%H:%M:%S.%f%z")
+                fs = open(t.strftime("%Y-%m-%d") + ".jsonl", "a")
                 fs.write(__message.decode()+"\n")
                 fs.close()
                 sys.stdout.flush()
