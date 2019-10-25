@@ -48,12 +48,18 @@ def main():
 
                 #by having the file open and close every write allows for a new file to be created on the new day
                 #probably a better way to write this, but i hate my SD card :D
-                jsonMessage = json.loads(__message.decode())
-                t = datetime.datetime.strptime(jsonMessage["header"]["gatewayTimestamp"], "%Y-%m-%dT%H:%M:%S.%f%z")
-                fs = open(t.strftime("%Y-%m-%d") + ".jsonl", "a")
-                fs.write(__message.decode()+"\n")
-                fs.close()
-                sys.stdout.flush()
+                try:
+                    jsonMessage = json.loads(__message.decode())
+                    # only use day for timestamp because the EDDN gateway will omit milliseconds if they are 0
+                    t = datetime.datetime.strptime(jsonMessage["header"]["gatewayTimestamp"][:10], "%Y-%m-%d")
+                    with open(t.strftime("%Y-%m-%d") + ".jsonl", "a") as fs:
+                        fs.write(__message.decode()+"\n")
+                        fs.close()
+                        sys.stdout.flush()
+                except (ValueError, KeyError) as e:
+                    print("Error parsing message: " + __message.decode())
+                    print(str(e))
+                    sys.stdout.flush()
 
         except zmq.ZMQError as e:
             print('ZMQSocketException: ' + str(e))
